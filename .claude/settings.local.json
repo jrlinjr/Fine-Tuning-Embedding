@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ollama list:*)",
+      "Bash(python3.11:*)",
+      "Bash(source venv/bin/activate)"
+    ]
+  }
+}

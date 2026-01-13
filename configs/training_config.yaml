@@ -1,0 +1,36 @@
+# 對比學習訓練設定
+
+# 基底嵌入模型
+model:
+  name: "BAAI/bge-base-zh-v1.5"
+  dimension: 768
+
+# 訓練參數
+training:
+  batch_size: 16
+  learning_rate: 2.0e-5
+  num_epochs: 3
+  warmup_ratio: 0.1
+
+# Step 1: 問答生成設定 (從法律文本生成問答對)
+qa_generation:
+  ollama_model: "llama3:8b"
+  num_qa_per_doc: 2              # 每個法律條文生成幾組問答
+  laws_dir: "data/raw/laws"      # 法律 JSON 檔案目錄
+
+# Step 2: 配對生成設定 (生成正負樣本)
+pair_generation:
+  ollama_model: "llama3:8b"
+  num_positive_variants: 2       # 每個問題生成幾個正樣本變體
+  num_hard_negatives: 1          # 每個問題生成幾個困難負樣本
+
+# 輸出路徑
+paths:
+  data_dir: "data/raw"
+  pairs_dir: "data/pairs"
+  output_dir: "models/finetuned"
+
+# 硬體設定 (M4 Pro)
+hardware:
+  use_mps: true
+  device: "mps"

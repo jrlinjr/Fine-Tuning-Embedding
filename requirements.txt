@@ -1,0 +1,18 @@
+# Embedding model and training
+sentence-transformers>=2.2.0
+torch>=2.0.0
+transformers>=4.30.0
+
+# Data processing
+datasets>=2.14.0
+pandas>=2.0.0
+
+# Local LLM
+ollama>=0.3.0
+
+# Configuration
+pyyaml>=6.0
+
+# Utilities
+tqdm>=4.65.0
+numpy>=1.24.0
