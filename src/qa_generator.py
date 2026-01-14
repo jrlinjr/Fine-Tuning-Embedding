@@ -35,14 +35,27 @@ class GeneratedQA:
 class QAGenerator:
     """從法律文本自動生成問答對"""
 
-    def __init__(self, model_name: str = "llama3:8b"):
+    def __init__(self, model_name: str = "llama3:8b", ollama_host: Optional[str] = None):
+        """
+        Args:
+            model_name: Ollama 模型名稱
+            ollama_host: 遠端 Ollama 主機 (如: "http://192.168.1.100:11434")
+        """
         self.model_name = model_name
+        self.ollama_host = ollama_host
         self.documents: list[LegalDocument] = []
         self.qa_pairs: list[GeneratedQA] = []
 
+        # 設定 Ollama client
+        if ollama_host:
+            self.client = ollama.Client(host=ollama_host)
+            print(f"連接遠端 Ollama: {ollama_host}")
+        else:
+            self.client = ollama.Client()
+
     def _call_ollama(self, prompt: str) -> str:
         """呼叫 Ollama API"""
-        response = ollama.chat(
+        response = self.client.chat(
             model=self.model_name,
             messages=[{"role": "user", "content": prompt}]
         )

@@ -32,6 +32,7 @@ def main():
     parser.add_argument("--max-laws", type=int, default=50, help="最多處理幾部法規 (預設 50)")
     parser.add_argument("--max-articles", type=int, default=10, help="每部法規最多幾條 (預設 10)")
     parser.add_argument("--qa-per-article", type=int, default=2, help="每條生成幾組問答 (預設 2)")
+    parser.add_argument("--ollama-host", type=str, help="遠端 Ollama 主機 (如: http://192.168.1.100:11434)")
     args = parser.parse_args()
 
     # 載入設定
@@ -43,7 +44,10 @@ def main():
     laws_dir = Path(__file__).parent.parent / "data" / "raw" / "laws"
 
     # 初始化生成器
-    generator = QAGenerator(model_name=config["qa_generation"]["ollama_model"])
+    generator = QAGenerator(
+        model_name=config["qa_generation"]["ollama_model"],
+        ollama_host=args.ollama_host
+    )
 
     # 設定載入參數
     if args.test:
