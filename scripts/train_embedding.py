@@ -54,7 +54,8 @@ def main():
         learning_rate=config["training"]["learning_rate"],
         num_epochs=config["training"]["num_epochs"],
         warmup_ratio=config["training"]["warmup_ratio"],
-        use_mps=config["hardware"]["use_mps"]
+        use_mps=config["hardware"].get("use_mps", False),
+        use_cuda=config["hardware"].get("use_cuda", True)
     )
 
     trainer = ContrastiveTrainer(trainer_config)

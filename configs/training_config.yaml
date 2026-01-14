@@ -14,7 +14,7 @@ training:
 
 # Step 1: 問答生成設定 (從法律文本生成問答對)
 qa_generation:
-  ollama_model: "llama3:8b"
+  ollama_model: "gpt-oss:20b"
   num_qa_per_doc: 2              # 每個法律條文生成幾組問答
   laws_dir: "data/raw/laws"      # 法律 JSON 檔案目錄
 
@@ -30,7 +30,10 @@ paths:
   pairs_dir: "data/pairs"
   output_dir: "models/finetuned"
 
-# 硬體設定 (M4 Pro)
+# 硬體設定
+# 本地 M4 Pro: use_mps=true, use_cuda=false
+# 遠端 5090:   use_mps=false, use_cuda=true
 hardware:
-  use_mps: true
-  device: "mps"
+  use_mps: false
+  use_cuda: true
+  device: "cuda"

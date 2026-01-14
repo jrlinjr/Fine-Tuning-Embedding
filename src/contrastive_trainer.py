@@ -28,7 +28,8 @@ class TrainerConfig:
     learning_rate: float = 2e-5
     num_epochs: int = 3
     warmup_ratio: float = 0.1
-    use_mps: bool = True  # M4 Pro MPS 加速
+    use_mps: bool = False   # Apple Silicon MPS
+    use_cuda: bool = True   # NVIDIA GPU
 
 
 class ContrastiveTrainer:
@@ -40,13 +41,14 @@ class ContrastiveTrainer:
         self.device = self._get_device()
 
     def _get_device(self) -> str:
-        """取得運算裝置 (優先使用 MPS)"""
-        if self.config.use_mps and torch.backends.mps.is_available():
+        """取得運算裝置"""
+        if self.config.use_cuda and torch.cuda.is_available():
+            gpu_name = torch.cuda.get_device_name(0)
+            print(f"使用 CUDA 加速: {gpu_name}")
+            return "cuda"
+        elif self.config.use_mps and torch.backends.mps.is_available():
             print("使用 MPS (Metal Performance Shaders) 加速")
             return "mps"
-        elif torch.cuda.is_available():
-            print("使用 CUDA 加速")
-            return "cuda"
         else:
             print("使用 CPU")
             return "cpu"
