@@ -35,7 +35,7 @@ class GeneratedQA:
 class QAGenerator:
     """從法律文本自動生成問答對"""
 
-    def __init__(self, model_name: str = "llama3:8b", ollama_host: Optional[str] = None):
+    def __init__(self, model_name: str = "", ollama_host: Optional[str] = None):
         """
         Args:
             model_name: Ollama 模型名稱
